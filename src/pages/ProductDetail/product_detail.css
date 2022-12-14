@@ -1,0 +1,82 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
+.image-gallery-image {
+    height: 450px;
+    object-fit: contain;
+    margin-bottom: 2rem;
+}
+
+  .image-gallery-slide .image-gallery-image {
+    height: 450px;
+    max-height: 450px;
+  }
+
+.price-wrap .price strong {
+    font-size: 2rem;
+}
+
+.price-wrap>span {
+    display: inline-block;
+}
+
+@media (max-width:768px) {
+    .details .row {
+        text-align: center;
+    }
+
+    .details .row button {
+        margin-top: 1rem;
+        width: 100%;
+    }
+    .details h1 {
+        text-align: center;
+    }
+    .details h1 {
+        margin-top: 1rem;
+    }
+}
+
+.btn-s1:hover .spin {
+    animation-name: spin;
+    animation-duration: 1s;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.well {
+    margin-top: 1rem;
+    background-color: rgba(234, 234, 234, .2);
+    padding: 1rem;
+    border-radius: 3px;
+}
+
+.well .spin {
+    margin-left: .5rem;
+    margin-right: .8rem;
+}
+
+.icon {
+    font-size: 2rem;
+}
+
+.well a {
+    text-decoration: none;
+    color: black;
+}
+
+.well a:hover {
+    opacity: .8;
+    color: black;
+}
+
+.asd {
+    overflow-wrap: break-word;
+}

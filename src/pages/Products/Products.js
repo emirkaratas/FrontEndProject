@@ -1,26 +1,21 @@
 import React from 'react'
 import { useQuery } from 'react-query'
 import Card from '../../components/Card/Card'
+import { fetchProductList } from '../../services/Api'
 
 function Products() {
-    const { isLoading, error, data } = useQuery('repoData', () =>
-        fetch('http://localhost:8080/api/products').then(res =>
-            res.json()
-        )
-    )
+    const { isLoading, error, data } = useQuery('products', fetchProductList)
 
-    if (isLoading) return 'Loading...'
+    if (isLoading) return 'Yükleniyor...'
 
     if (error) return 'An error has occurred: ' + error.message
-
-    console.log(data);
 
     return (
         <div className='container'>
             <div className="row">
                 {
-                    data.map((item,key)=>{
-                        return <Card key={key} item={item}/>
+                    data.map((item, key) => {
+                        return <Card key={key} item={item} />
                     })
                 }
             </div>

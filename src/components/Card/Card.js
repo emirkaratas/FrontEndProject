@@ -7,11 +7,11 @@ function Card({item}) {
     return (
         <div className="col-lg-3 col-md-4 col-sm-6 mt-3">
             <figure className="card shadow">
-                <Link to="#/" className='img-wrap'>
-                    <img src={item.photo} alt="product" />
+                <Link to={`/product/${item.id}`} className='img-wrap'>
+                    <img src={item.photo[0]} alt="product" loading='lazy'/>
                 </Link>
                 <figcaption className="info-wrap border-top">
-                    <Link to="#/" className='title text-truncate h5'>
+                    <Link to={`/product/${item.id}`} className='title text-truncate h5'>
                         {item.title}
                     </Link>
                     <div className="price-wrap">

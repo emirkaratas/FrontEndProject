@@ -1,7 +1,7 @@
 import React from 'react'
 import './navbar.css'
 import { Link } from "react-router-dom"
-import { FaSignInAlt, FaShoppingCart, FaSignOutAlt } from "react-icons/fa"
+import { FaSignInAlt, FaShoppingCart, FaSignOutAlt, FaSearch } from "react-icons/fa"
 
 
 function Navbar() {
@@ -40,7 +40,7 @@ function Navbar() {
                                 <div className="input-group">
                                     <input type="text" className="form-control" placeholder="Work in Progress..." />
                                     <button className="btn btn-primary">
-                                        <i className="fa fa-search"></i>
+                                        <FaSearch/>
                                     </button>
                                 </div>
                             </form>
