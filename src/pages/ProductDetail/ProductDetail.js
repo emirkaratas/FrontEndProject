@@ -21,7 +21,7 @@ function ProductDetail() {
     return (
         <div className='container mt-3'>
             <div className="row">
-                <aside className="col-lg-5 bg-light ">
+                <aside className="col-lg-5">
                     <div className="">
                         <ImageGallery
                             items={images}
@@ -29,6 +29,7 @@ function ProductDetail() {
                             useBrowserFullscreen={false}
                             showNav={true}
                             showIndex={true}
+                            additionalClass='bg-slider'
                         />
                     </div>
                 </aside>
@@ -63,25 +64,25 @@ function ProductDetail() {
                         </div>
                     </div>
                     <hr />
-                    <div className="well d-flex align-items-center ">
-                        <HiGift className='icon me-2' />
-                        <span>Ücretsiz Kargo</span>
-                    </div>
-                    <div className="well d-flex align-items-center">
-                        <FaTruck className='icon me-2' />
-                        <span>17:30'a kadar verilen siparişler aynı gün kargoya verilir.</span>
-                    </div>
-                    <div className="well d-flex flex-column " id='last'>
+                    <div className="well d-flex flex-column mt-2">
                         <span className='h5'>Özellikler</span>
                         <div className="text-truncate">
                             {data.description}
                         </div>
                         <a href="#specs" className='mt-2'>Daha Fazlasını Göster</a>
                     </div>
+                    <div className="well d-flex align-items-center ">
+                        <HiGift className='icon me-2' />
+                        <span>Ücretsiz Kargo</span>
+                    </div>
+                    <div className="well d-flex align-items-center bg-light">
+                        <FaTruck className='icon me-2' />
+                        <span>17:30'a kadar verilen siparişler aynı gün kargoya verilir.</span>
+                    </div>
                 </main>
-                <div className="col-lg-12 ">
-                    <div className="bg-primary">
-                        <p className='asd'>
+                <div className="col-lg-12 mt-5" id='specs'>
+                    <div className="bg-light">
+                        <p className='line'>
                             {data.description}
                         </p>
                     </div>

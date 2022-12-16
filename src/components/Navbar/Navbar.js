@@ -2,9 +2,12 @@ import React from 'react'
 import './navbar.css'
 import { Link } from "react-router-dom"
 import { FaSignInAlt, FaShoppingCart, FaSignOutAlt, FaSearch } from "react-icons/fa"
-
+import { useAuth } from '../../contexts/AuthContext'
+import {MdAccountCircle} from 'react-icons/md'
 
 function Navbar() {
+    const { loggedIn } = useAuth()
+    console.log(loggedIn)
     return (
         <div className='bg-light'>
             <div className='top-bar'>
@@ -15,18 +18,34 @@ function Navbar() {
                         </div>
                         <div className="col-lg-5 text-end order-lg-last col-sm-8 col-8">
                             <div>
-                                <Link to="/signin">
-                                    <button className="btn btn-primary me-2" >
-                                        <FaSignInAlt></FaSignInAlt>
-                                        <span className="ms-1 d-none d-sm-inline-block">Giriş Yap</span>
-                                    </button>
-                                </Link>
-                                <Link to="/signup">
-                                    <button className="btn btn-primary me-2">
-                                        <FaSignOutAlt></FaSignOutAlt>
-                                        <span className="ms-1 d-none d-sm-inline-block">Kayıt Ol</span>
-                                    </button>
-                                </Link>
+                                {
+                                    !loggedIn &&
+                                    <>
+                                        <Link to="/signin">
+                                            <button className="btn btn-primary me-2" >
+                                                <FaSignInAlt></FaSignInAlt>
+                                                <span className="ms-1 d-none d-sm-inline-block">Giriş Yap</span>
+                                            </button>
+                                        </Link>
+                                        <Link to="/signup">
+                                            <button className="btn btn-primary me-2">
+                                                <FaSignOutAlt></FaSignOutAlt>
+                                                <span className="ms-1 d-none d-sm-inline-block">Kayıt Ol</span>
+                                            </button>
+                                        </Link>
+                                    </>
+                                }
+                                {
+                                    loggedIn &&
+                                    <>
+                                        <Link to="/profile">
+                                            <button className="btn btn-primary me-2" >
+                                                <MdAccountCircle/>
+                                                <span className="ms-1 d-none d-sm-inline-block">Hesabım</span>
+                                            </button>
+                                        </Link>
+                                    </>
+                                }
                                 <Link to="/cart">
                                     <button className="btn btn-primary">
                                         <FaShoppingCart></FaShoppingCart>
@@ -40,12 +59,11 @@ function Navbar() {
                                 <div className="input-group">
                                     <input type="text" className="form-control" placeholder="Work in Progress..." />
                                     <button className="btn btn-primary">
-                                        <FaSearch/>
+                                        <FaSearch />
                                     </button>
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>
