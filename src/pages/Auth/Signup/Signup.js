@@ -7,9 +7,11 @@ import Form from 'react-bootstrap/Form';
 import { fetchRegister } from '../../../services/Api'
 import { Alert } from 'react-bootstrap'
 import { useAuth } from '../../../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 function Signup() {
-  const {login} = useAuth()
+  const navigate = useNavigate()
+  const { login } = useAuth()
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -19,10 +21,11 @@ function Signup() {
     validationSchema: validations,
     onSubmit: async (values, bag) => {
       try {
-        const registerResponse = await fetchRegister({email:values.email, password:values.password})
+        const registerResponse = await fetchRegister({ email: values.email, password: values.password })
         login(registerResponse)
+        navigate(`/profile`)
       } catch (error) {
-        bag.setErrors({general:error.response.data.message})
+        bag.setErrors({ general: error.response.data.message })
       }
     }
   })
@@ -55,6 +58,7 @@ function Signup() {
                       isInvalid={formik.touched.email && formik.errors.email}
                       className="form-control"
                     />
+                    {formik.errors.email && formik.touched.email && <div>{formik.errors.email}</div>}
                   </div>
                 </div>
                 <div className="d-flex flex-row align-items-center mb-4">
@@ -70,6 +74,7 @@ function Signup() {
                       isInvalid={formik.touched.password && formik.errors.password}
                       className="form-control"
                     />
+                    {formik.errors.password && formik.touched.password && <div>{formik.errors.password}</div>}
                   </div>
                 </div>
                 <div className="d-flex flex-row align-items-center mb-4">

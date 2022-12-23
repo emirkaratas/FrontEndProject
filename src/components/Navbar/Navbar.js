@@ -7,7 +7,6 @@ import {MdAccountCircle} from 'react-icons/md'
 
 function Navbar() {
     const { loggedIn } = useAuth()
-    console.log(loggedIn)
     return (
         <div className='bg-light'>
             <div className='top-bar'>
