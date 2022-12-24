@@ -3,10 +3,13 @@ import './navbar.css'
 import { Link } from "react-router-dom"
 import { FaSignInAlt, FaShoppingCart, FaSignOutAlt, FaSearch } from "react-icons/fa"
 import { useAuth } from '../../contexts/AuthContext'
-import {MdAccountCircle} from 'react-icons/md'
+import { MdAccountCircle } from 'react-icons/md'
+import { useBasket } from '../../contexts/BasketContext'
+import { Badge } from 'react-bootstrap'
 
 function Navbar() {
     const { loggedIn } = useAuth()
+    const { items} = useBasket()
     return (
         <div className='bg-light'>
             <div className='top-bar'>
@@ -22,13 +25,13 @@ function Navbar() {
                                     <>
                                         <Link to="/signin">
                                             <button className="btn btn-primary me-2" >
-                                                <FaSignInAlt></FaSignInAlt>
+                                                <FaSignInAlt className='navbar-icon' />
                                                 <span className="ms-1 d-none d-sm-inline-block">Giriş Yap</span>
                                             </button>
                                         </Link>
                                         <Link to="/signup">
                                             <button className="btn btn-primary me-2">
-                                                <FaSignOutAlt></FaSignOutAlt>
+                                                <FaSignOutAlt className='navbar-icon' />
                                                 <span className="ms-1 d-none d-sm-inline-block">Kayıt Ol</span>
                                             </button>
                                         </Link>
@@ -39,18 +42,23 @@ function Navbar() {
                                     <>
                                         <Link to="/profile">
                                             <button className="btn btn-primary me-2" >
-                                                <MdAccountCircle/>
+                                                <MdAccountCircle className='navbar-icon' />
                                                 <span className="ms-1 d-none d-sm-inline-block">Hesabım</span>
+                                            </button>
+                                        </Link>
+                                        <Link to="/cart">
+                                            <button className="btn btn-primary">
+                                                <span className='position-relative me-2 me-md-0'>
+                                                    <FaShoppingCart className='navbar-icon' />
+                                                    <Badge pill bg="info" className='position-absolute top-10 start-50'>
+                                                        {items.length}
+                                                    </Badge>{' '}
+                                                </span>
+                                                <span className="custom-navbar-margin d-none d-sm-inline-block">Sepet</span>
                                             </button>
                                         </Link>
                                     </>
                                 }
-                                <Link to="/cart">
-                                    <button className="btn btn-primary">
-                                        <FaShoppingCart></FaShoppingCart>
-                                        <span className="ms-1 d-none d-sm-inline-block">Sepet</span>
-                                    </button>
-                                </Link>
                             </div>
                         </div>
                         <div className="col-lg-5">
@@ -62,7 +70,7 @@ function Navbar() {
                                     </button>
                                 </div>
                             </form>
-                        </div>
+                        </div> 
                     </div>
                 </div>
             </div>

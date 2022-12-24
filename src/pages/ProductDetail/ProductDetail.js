@@ -6,10 +6,11 @@ import { FaShoppingCart, FaTruck } from "react-icons/fa"
 import { HiGift } from "react-icons/hi"
 import "./product_detail.css"
 import ImageGallery from 'react-image-gallery';
-
+import { useBasket } from '../../contexts/BasketContext'
 
 function ProductDetail() {
     const { product_id } = useParams()
+    const { addToBasket, items } = useBasket()
     const { isLoading, error, data } = useQuery(["product", product_id], () => fetchProduct(product_id))
 
     if (isLoading) return 'Yükleniyor...'
@@ -18,18 +19,20 @@ function ProductDetail() {
 
     const images = data.photo.map((url) => ({ original: url }))
 
+    const findBasketItem = items.find((item) => item.id === parseInt(product_id))
+
     return (
         <div className='container mt-3'>
             <div className="row">
                 <aside className="col-lg-5">
-                    <div className="">
+                    <div className="custom-align my-auto">
                         <ImageGallery
                             items={images}
                             showPlayButton={false}
                             useBrowserFullscreen={false}
                             showNav={true}
                             showIndex={true}
-                            additionalClass='bg-slider'
+                            additionalClass='bg-slider custom-align'
                         />
                     </div>
                 </aside>
@@ -53,11 +56,15 @@ function ProductDetail() {
                             </div>
                         </div>
                         <div className="col-md-4 text-end">
-                            <button className='btn btn-lg btn-info text-white btn-s1'>
+                            <button className='btn btn-lg btn-info text-white btn-s1' onClick={() => addToBasket(data, findBasketItem)}>
                                 <div className="d-inline-block">
                                     <div className="d-flex">
                                         <div className="spin me-2"><FaShoppingCart /></div>
-                                        <span>Sepete Ekle</span>
+                                        <span>
+                                            {
+                                                findBasketItem ? 'Sepetten Çıkart' : 'Sepete Ekle'
+                                            }
+                                        </span>
                                     </div>
                                 </div>
                             </button>

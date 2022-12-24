@@ -9,6 +9,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { AuthProvider } from './contexts/AuthContext';
+import { BasketProvider } from './contexts/BasketContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,9 +26,11 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <BasketProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </BasketProvider>
       </AuthProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

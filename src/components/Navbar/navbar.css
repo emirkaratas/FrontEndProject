@@ -6,3 +6,11 @@
 .btn-light i{
     color: #9da1a7;
 }
+
+.navbar-icon {
+    font-size: 1.4rem;
+}
+
+.custom-navbar-margin {
+    margin-left: 1.2rem;
+}

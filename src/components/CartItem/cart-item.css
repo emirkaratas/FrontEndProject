@@ -1,0 +1,20 @@
+.cart-img-wrap {
+    width: 10rem;
+    height: auto;
+    text-align: center;
+}
+
+.img-border {
+    border-top: 0!important;
+    border-left: 0!important;
+}
+
+.count-wrapper{
+    width: 2rem;
+}
+
+@media (max-width:768px) {
+    .responsive-button {
+        font-size: 0.7rem!important ;
+    }
+}

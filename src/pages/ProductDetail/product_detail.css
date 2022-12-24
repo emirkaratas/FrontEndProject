@@ -86,3 +86,12 @@
 .line {
     overflow-wrap: break-word;
 }
+
+.custom-alert {
+    width: 10%;
+}
+
+.custom-align {
+    height: 100%;
+    vertical-align: bottom!important;
+}

@@ -10,7 +10,6 @@ axios.interceptors.request.use(function (config) {
     }
     return config
 }, function (error) {
-    // Do something with request error
     return Promise.reject(error);
 });
 
@@ -30,7 +29,7 @@ export const fetchRegister = async (input) => {
 }
 
 export const fetchLogin = async (input) => {
-    const {data} = await axios.post(`http://localhost:8080/api/products/auth/login`,input)
+    const { data } = await axios.post(`http://localhost:8080/api/products/auth/login`, input)
     return data
 }
 
@@ -40,9 +39,13 @@ export const fetchMe = async () => {
 }
 
 export const fetchLogout = async () => {
-    const {data} = await axios.post(`http://localhost:8080/api/products/auth/logout`,{
+    const { data } = await axios.post(`http://localhost:8080/api/products/auth/logout`, {
         refresh_token: localStorage.getItem('refresh-token')
     })
     return data
 }
 
+export const postOrder = async (input) => {
+    const { data } = await axios.post(`http://localhost:8080/api/products/order`,input)
+    return data
+}
