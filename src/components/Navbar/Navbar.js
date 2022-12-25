@@ -2,14 +2,15 @@ import React from 'react'
 import './navbar.css'
 import { Link } from "react-router-dom"
 import { FaSignInAlt, FaShoppingCart, FaSignOutAlt, FaSearch } from "react-icons/fa"
+import { RiAdminFill } from "react-icons/ri"
 import { useAuth } from '../../contexts/AuthContext'
 import { MdAccountCircle } from 'react-icons/md'
 import { useBasket } from '../../contexts/BasketContext'
 import { Badge } from 'react-bootstrap'
 
 function Navbar() {
-    const { loggedIn } = useAuth()
-    const { items} = useBasket()
+    const { loggedIn, user } = useAuth()
+    const { items } = useBasket()
     return (
         <div className='bg-light'>
             <div className='top-bar'>
@@ -40,6 +41,16 @@ function Navbar() {
                                 {
                                     loggedIn &&
                                     <>
+                                        {
+                                            user.role === "admin" && (
+                                                <Link to="/admin">
+                                                    <button className="btn btn-primary me-2" >
+                                                        <RiAdminFill className='navbar-icon' />
+                                                        <span className="ms-1 d-none d-sm-inline-block">Admin</span>
+                                                    </button>
+                                                </Link>
+                                            )
+                                        }
                                         <Link to="/profile">
                                             <button className="btn btn-primary me-2" >
                                                 <MdAccountCircle className='navbar-icon' />
@@ -70,7 +81,7 @@ function Navbar() {
                                     </button>
                                 </div>
                             </form>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>

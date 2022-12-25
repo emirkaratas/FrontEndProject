@@ -45,7 +45,15 @@ export const fetchLogout = async () => {
     return data
 }
 
-export const postOrder = async (input) => {
-    const { data } = await axios.post(`http://localhost:8080/api/products/order`,input)
+export const postOrder = async (input) => {   
+    const { data } = await axios.post(`http://localhost:8080/api/products/order`, input)
+    return data
+}
+
+//Backend Connection in Development
+
+export const fetchOrders = async () => {
+    const { data } = await axios.get(`http://localhost:8080/api/products/order`)
+    console.log(data);
     return data
 }
