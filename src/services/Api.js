@@ -13,8 +13,11 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
-export const fetchProductList = async ({ pageParam = 1 }) => {
+export const fetchProductList = async ({ pageParam = 1, filter }) => {
     const { data } = await axios.get(`http://localhost:8080/api/products?page=${pageParam}`)
+    if (filter !== "" && filter != undefined) {
+        return data.filter(product => product.title.toLowerCase().includes(filter))
+    }
     return data
 }
 
@@ -45,7 +48,7 @@ export const fetchLogout = async () => {
     return data
 }
 
-export const postOrder = async (input) => {   
+export const postOrder = async (input) => {
     const { data } = await axios.post(`http://localhost:8080/api/products/order`, input)
     return data
 }
@@ -53,7 +56,30 @@ export const postOrder = async (input) => {
 //Backend Connection in Development
 
 export const fetchOrders = async () => {
-    const { data } = await axios.get(`http://localhost:8080/api/products/order`)
-    console.log(data);
+    // const { data } = await axios.get(`http://localhost:8080/api/products/order`)
+    // return data
+    return [
+        { user: { mail: "emirkaratassss@gmail.com" }, id: 1, items: [{ id: 2, count: 1 }, { id: 3, count: 4 }], orderDetails: { name: "Emir", surname: "Karataş", telNo: "5530957203", address: "Samsun" } },
+        { user: { mail: "bilgeylmaz@gmail.com" }, id: 2, items: [{ id: 3, count: 1 }, { id: 1, count: 2 }], orderDetails: { name: "Bilge", surname: "Yılmaz", telNo: "5530000000", address: "İstanbul" } }
+    ]
+}
+
+export const fetchOrder = async (id) => {
+    if (id == 1) return { user: { mail: "emirkaratassss@gmail.com" }, id: 1, items: [{ id: 2, count: 1 }, { id: 3, count: 4 }], orderDetails: { name: "Emir", surname: "Karataş", telNo: "5530957203", address: "Samsun" } }
+    return { user: { mail: "bilgeylmaz@gmail.com" }, id: 2, items: [{ id: 3, count: 1 }, { id: 1, count: 2 }], orderDetails: { name: "Bilge", surname: "Yılmaz", telNo: "5530000000", address: "İstanbul" } }
+}
+
+export const deleteProduct = async (id) => {
+    const { data } = await axios.delete(`http://localhost:8080/api/products/${id}`)
+    return data
+}
+
+export const updateProduct = async (entity) => {
+    const { data } = await axios.put(`http://localhost:8080/api/products/${entity.id}`, entity.product)
+    return data
+}
+
+export const postProduct = async (product) => {
+    const { data } = await axios.post("http://localhost:8080/api/products",product)
     return data
 }

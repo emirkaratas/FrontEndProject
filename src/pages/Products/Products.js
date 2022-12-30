@@ -1,15 +1,17 @@
 import React from 'react'
 import { useInfiniteQuery } from 'react-query'
+import { Link, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
 import { fetchProductList } from '../../services/Api'
 
 function Products() {
+    const filter = useParams()
     const { data,
         error,
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
-        status } = useInfiniteQuery('products', fetchProductList, {
+        status } = useInfiniteQuery(['products', filter], () => fetchProductList(filter), {
             getNextPageParam: (lastPage, pages) => {
                 const morePagesExist = lastPage?.length === 20;
                 if (!morePagesExist) return

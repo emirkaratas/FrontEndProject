@@ -1,3 +1,4 @@
+import { message } from "antd";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const BasketContext = createContext()
@@ -13,14 +14,17 @@ const BasketProvider = ({ children }) => {
 
     const addToBasket = (data, findBasketItem) => {
         if (!findBasketItem) {
+            message.success({content: "Sepete Eklendi",key:"basket:item",duration: 2})
             return setItems((items) => [{ ...data, count: 1 }, ...items].sort((a, b) => a.id > b.id ? 1 : -1))
         }
+        message.success({content: "Sepetten Kaldırıldı",key:"basket:item",duration: 2})
         removeFromBasket(findBasketItem.id)
     }
 
     const removeFromBasket = (id) => {
         const filtered = items.filter((item) => item.id !== id)
         setItems(filtered)
+        message.success({content: "Sepetten Kaldırıldı",key:"basket:item",duration: 2})
     }
 
     const emptyBasket = () => {

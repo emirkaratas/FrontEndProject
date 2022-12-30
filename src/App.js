@@ -13,6 +13,9 @@ import ProductDetail from './pages/ProductDetail/ProductDetail';
 import Products from './pages/Products/Products';
 import Profile from './pages/Profile/Profile';
 import ProtectedRoute from './pages/ProtectedRoute/ProtectedRoute';
+import OrderDetail from './pages/Admin/Orders/OrderDetail/OrderDetail';
+import AdminProductDetail from './pages/Admin/Products/ProductDetail/AdminProductDetail';
+import AddProduct from './pages/Admin/Products/AddProduct/AddProduct';
 
 function App() {
   return (
@@ -33,9 +36,13 @@ function App() {
           <Route exact path='/admin/*' element={<Admin />}>
             <Route path='' element={<Home />} />
             <Route path='orders' element={<Orders />} />
+            <Route path='order/:id' element={<OrderDetail/>}/>
             <Route path='products' element={<AdminProducts />} />
+            <Route path='products/:product_id' element={<AdminProductDetail/>}/>
+            <Route path='products/new' element={<AddProduct/>}/>
           </Route>
         </Route>
+        <Route path='/search/:filter' element={<Products/>}/>
         <Route path='*' element={<Error404 />} />
       </Routes>
       <Footer />

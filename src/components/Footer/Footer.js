@@ -25,7 +25,7 @@ function Footer() {
                         </nav>
                     </div>
                     <div className="col-md-12">
-                        <p className="text-center text-white mt-3">@2022 - Tüm hakları saklıdır.</p>
+                        <p className="text-center text-white mt-3">{new Date().getFullYear()} - Tüm hakları saklıdır.</p>
                     </div>
                 </div>
             </div>

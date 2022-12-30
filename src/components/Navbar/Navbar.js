@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './navbar.css'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { FaSignInAlt, FaShoppingCart, FaSignOutAlt, FaSearch } from "react-icons/fa"
 import { RiAdminFill } from "react-icons/ri"
 import { useAuth } from '../../contexts/AuthContext'
@@ -10,7 +10,19 @@ import { Badge } from 'react-bootstrap'
 
 function Navbar() {
     const { loggedIn, user } = useAuth()
+    const [search,setSearch] = useState("")
     const { items } = useBasket()
+    const navigate = useNavigate()
+
+    const handleChange = (e) => {
+        setSearch(e.target.value)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setSearch("")
+    }
+
     return (
         <div className='bg-light'>
             <div className='top-bar'>
@@ -73,10 +85,10 @@ function Navbar() {
                             </div>
                         </div>
                         <div className="col-lg-5">
-                            <form action="">
+                            <form onSubmit={handleSubmit}>
                                 <div className="input-group">
-                                    <input type="text" className="form-control" placeholder="Work in Progress..." />
-                                    <button className="btn btn-primary">
+                                    <input type="text" className="form-control" placeholder="Ara" value={search} onChange={handleChange}/>
+                                    <button type="submit" className="btn btn-primary" onClick={()=>navigate(`/search/${search}`)}>
                                         <FaSearch />
                                     </button>
                                 </div>
