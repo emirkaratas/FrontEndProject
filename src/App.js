@@ -28,7 +28,7 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path='/profile' element={<ProtectedRoute />}>
-          <Route exact path='/profile' element={<Profile />} />
+          <Route exact path='/profile' element={<Profile/>} />
         </Route>
         <Route path='/cart' element={<ProtectedRoute />}>
           <Route exact path='/cart' element={<Basket />} />
