@@ -1,5 +1,5 @@
 import React from 'react'
-import { deleteProduct, fetchProductList } from '../../../services/Api'
+import { deleteProduct, fetchAdminProducts } from '../../../services/Api'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { Table, Space, Popconfirm, message } from 'antd'
 import { Link } from 'react-router-dom'
@@ -8,13 +8,12 @@ import { useBasket } from '../../../contexts/BasketContext'
 function Products() {
   const queryClient = useQueryClient()
   const { removeFromBasket } = useBasket()
-  const { isLoading, error, data } = useQuery("admin:products", fetchProductList)
-
+  const { isLoading, error, data } = useQuery("admin:products", fetchAdminProducts)
   const deleteMutation = useMutation(deleteProduct,
     {
       onSuccess: () => {
         queryClient.invalidateQueries("admin:products")  
-        queryClient.refetchQueries(["products",{}])  
+        queryClient.refetchQueries("products")  
       }   
     }
   )
@@ -26,33 +25,33 @@ function Products() {
   const columns = [
     {
       title: 'Ürün İsmi',
-      dataIndex: 'title',
-      key: 'title',
+      dataIndex: 'productName',
+      key: 'productName',
     },
     {
       title: 'Fiyat',
-      dataIndex: 'price',
-      key: 'price',
+      dataIndex: 'unitPrice',
+      key: 'unitPrice',
       render: (text) => <span className='text-success'>{text}</span>
     },
     {
-      title: 'Oluşturulma Tarihi',
-      dataIndex: 'date',
-      key: 'date',
+      title: 'Stok',
+      dataIndex: 'unitsInStock',
+      key: 'unitsInStock',
     },
     {
       title: "",
       key: "action",
       render: (record) => (
         <Space size="middle">
-          <Link to={`/admin/products/${record.id}`} className="text-decoration-none">Güncelle</Link>
+          <Link to={`/admin/products/${record.productId}`} className="text-decoration-none">Güncelle</Link>
           <Popconfirm
             title="Ürünü Sil"
             description="Ürünü silmek istediğinize emin misiniz?"
             onConfirm={() => {
-              deleteMutation.mutate(record.id, {
+              deleteMutation.mutate(record.productId, {
                 onSuccess: () => {
-                  removeFromBasket(record.id)
+                  removeFromBasket(record.productId)
                   message.success("Ürün Silindi")
                 }
               })
@@ -74,7 +73,7 @@ function Products() {
           <button className='btn btn-primary mb-3 btn-lg'>Yeni Ürün</button>
         </Link>
       </div>
-      <Table dataSource={data} columns={columns} rowKey="id" />
+      <Table dataSource={data} columns={columns} rowKey="productId" />
     </div>
   )
 }

@@ -11,13 +11,15 @@ function AdminProductDetail() {
     const queryClient = useQueryClient()
     const addMutation = useMutation(postProduct, {
         onSuccess: () => {
-            queryClient.refetchQueries(["products",{}])  
+            queryClient.refetchQueries(["products", {}])
             queryClient.refetchQueries("admin:products")
         }
     })
     const handleSubmit = async (values) => {
+        console.log(values)
         message.loading({ content: "Yükleniyor", key: "product:add" })
-        addMutation.mutate(values,{
+        values.imageUrls = values.imageUrls.map((item)=>({imageUrl: item}))
+        addMutation.mutate({...values,categoryName: "string"}, {
             onSuccess: () => message.success({ content: "Başarıyla Eklendi", key: "product:add", duration: 3 }),
             onError: () => message.error({ content: "Ekleme Başarısız", key: "product:add", duration: 2 })
         })
@@ -26,10 +28,11 @@ function AdminProductDetail() {
     return (
         <div>
             <Formik initialValues={{
-                title: "",
-                price: "",
+                productName: "",
+                unitPrice: "",
                 description: "",
-                photo: [],
+                imageUrls: [],
+                unitsInStock: ""
             }}
                 onSubmit={handleSubmit}
                 validationSchema={validations}
@@ -38,39 +41,54 @@ function AdminProductDetail() {
                     ({ errors, touched, handleChange, handleSubmit, handleBlur, values, isSubmitting }) => (
                         <div className='container'>
                             <Form onSubmit={handleSubmit}>
+                                <Form.Group className="mb-3 mt-3">
+                                    <Form.Label>Ürün İsmi</Form.Label>
+                                    <Form.Control
+                                        id='productName'
+                                        name='productName'
+                                        type="text"
+                                        disabled={isSubmitting}
+                                        value={values.productName}
+                                        placeholder="Ürün İsmini Giriniz"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        isInvalid={touched.productName && errors.productName}
+                                    />
+                                    {errors.productName && touched.productName && <div>{errors.productName}</div>}
+                                </Form.Group>
                                 <div className="row">
                                     <div className="col-lg-6">
                                         <Form.Group className="mb-3 mt-3">
-                                            <Form.Label>Ürün İsmi</Form.Label>
+                                            <Form.Label>Stok Miktarı</Form.Label>
                                             <Form.Control
-                                                id='title'
-                                                name='title'
-                                                type="text"
+                                                id='unitsInStock'
+                                                name='unitsInStock'
+                                                type="number"
                                                 disabled={isSubmitting}
-                                                value={values.title}
-                                                placeholder="Ürün İsmini Giriniz"
+                                                value={values.unitsInStock}
+                                                placeholder="Stok Miktarını Giriniz"
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                isInvalid={touched.title && errors.title}
+                                                isInvalid={touched.unitsInStock && errors.unitsInStock}
                                             />
-                                            {errors.title && touched.title && <div>{errors.title}</div>}
+                                            {errors.unitsInStock && touched.unitsInStock && <div>{errors.unitsInStock}</div>}
                                         </Form.Group>
                                     </div>
                                     <div className="col-lg-6">
                                         <Form.Group className="mb-3 mt-3">
                                             <Form.Label>Fiyat</Form.Label>
                                             <Form.Control
-                                                id='price'
-                                                name='price'
+                                                id='unitPrice'
+                                                name='unitPrice'
                                                 type="number"
-                                                value={values.price}
+                                                value={values.unitPrice}
                                                 placeholder="Ürün Fiyatını Giriniz"
                                                 onChange={handleChange}
                                                 disabled={isSubmitting}
                                                 onBlur={handleBlur}
-                                                isInvalid={touched.price && errors.price}
+                                                isInvalid={touched.unitPrice && errors.unitPrice}
                                             />
-                                            {errors.price && touched.price && <div>{errors.price}</div>}
+                                            {errors.unitPrice && touched.unitPrice && <div>{errors.unitPrice}</div>}
                                         </Form.Group>
                                     </div>
                                 </div>
@@ -92,23 +110,24 @@ function AdminProductDetail() {
                                 <Form.Group className="mb-3 mt-3">
                                     <Form.Label>Fotoğraflar</Form.Label>
                                     <FieldArray
-                                        name='photo'
+                                        name='imageUrls'
                                         render={
                                             arrayHelpers => (
                                                 <div>
                                                     {
-                                                        values.photo.map((photo, index) => {
+                                                        values.imageUrls.map((photo, index) => {
                                                             return <div className='d-flex gap-2 mb-2' key={index}>
                                                                 <Form.Control
-                                                                    id='photo'
-                                                                    name={`photo.${index}`}
+                                                                    id='imageUrls'
+                                                                    name={`imageUrls.${index}`}
                                                                     value={photo}
                                                                     placeholder="Fotoğraf Giriniz"
                                                                     onChange={handleChange}
                                                                     onBlur={handleBlur}
                                                                 />
-                                                                <button className='btn btn-primary' onClick={() => arrayHelpers.remove(index)}>Sil</button>
+                                                                <button className='btn btn-primary' onClick={() => arrayHelpers.remove(index)}>Sil</button>                                         
                                                             </div>
+                                                            
                                                         })
                                                     }
                                                     <Button onClick={() => arrayHelpers.push("")}>Fotoğraf Ekle</Button>

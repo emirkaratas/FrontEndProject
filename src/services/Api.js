@@ -2,51 +2,61 @@ import axios from "axios"
 
 axios.interceptors.request.use(function (config) {
     const { origin } = new URL(config.url)
-    const allowedOrigin = ["http://localhost:8080/api/products"]
+    const allowedOrigin = "http://localhost:7200/api"
     const token = localStorage.getItem('access-token')
 
-    if (allowedOrigin.includes(origin)) {
-        config.headers.authorization = token
-    }
+    // if (allowedOrigin.includes(origin)) {
+    //     config.headers.authorization = token      
+    // }
+    config.headers.token = token
+    config.headers.authorization = `Bearer ${token}`
+
     return config
 }, function (error) {
     return Promise.reject(error);
 });
 
-export const fetchProductList = async ({ pageParam = 1, filter }) => {
-    const { data } = await axios.get(`http://localhost:8080/api/products?page=${pageParam}`)
-    if (filter !== "" && filter != undefined) {
-        return data.filter(product => product.title.toLowerCase().includes(filter))
-    }
+export const fetchProductList = async ({ pageParam = 1}) => {
+    const { data } = await axios.get(`https://localhost:7200/api/Products/page?page=${pageParam}`)
+    return data
+}
+
+export const fetchProductsFiltered = async({ pageParam = 1, queryKey }) => {
+    const { data } = await axios.post(`https://localhost:7200/api/Products/filter/${pageParam}?name=${queryKey[1].filter}`)
     return data
 }
 
 export const fetchProduct = async (id) => {
-    const { data } = await axios.get(`http://localhost:8080/api/products/${id}`)
-    return data
+    const { data } = await axios.get(`https://localhost:7200/api/Products/getoneproductwithdetails/${id}`)
+    return data.data
+}
+
+export const fetchAdminProducts = async () => {
+    const { data } = await axios.get("https://localhost:7200/api/Products/getproductswithdetails")
+    return data.data
 }
 
 export const fetchRegister = async (input) => {
-    const { data } = await axios.post(`http://localhost:8080/api/products/auth/register`, input)
-    return data
+    const { data } = await axios.post(`https://localhost:7200/api/Auth/registerUser`, input)
+    return data.data
 }
 
 export const fetchLogin = async (input) => {
-    const { data } = await axios.post(`http://localhost:8080/api/products/auth/login`, input)
-    return data
+    const { data } = await axios.post(`https://localhost:7200/api/Auth/login`, input)
+    return data.data
 }
 
 export const fetchMe = async () => {
-    const { data } = await axios.get(`http://localhost:8080/api/products/auth/me`)
-    return data
+    const { data } = await axios.get(`https://localhost:7200/api/Auth/authMe`)
+    return data.data
 }
 
-export const fetchLogout = async () => {
-    const { data } = await axios.post(`http://localhost:8080/api/products/auth/logout`, {
-        refresh_token: localStorage.getItem('refresh-token')
-    })
-    return data
-}
+// export const fetchLogout = async () => {
+//     const { data } = await axios.post(`https://localhost:7200/api/Auth/delete`, {
+//         refresh_token: localStorage.getItem('refresh-token')
+//     })
+//     return data
+// }
 
 export const postOrder = async (input) => {
     const { data } = await axios.post(`http://localhost:8080/api/products/order`, input)
@@ -70,16 +80,16 @@ export const fetchOrder = async (id) => {
 }
 
 export const deleteProduct = async (id) => {
-    const { data } = await axios.delete(`http://localhost:8080/api/products/${id}`)
+    const { data } = await axios.delete(`https://localhost:7200/api/Products/delete?id=${id}`)
     return data
 }
 
 export const updateProduct = async (entity) => {
-    const { data } = await axios.put(`http://localhost:8080/api/products/${entity.id}`, entity.product)
+    const { data } = await axios.put(`https://localhost:7200/api/Products/updatewithdto`, entity)
     return data
 }
 
 export const postProduct = async (product) => {
-    const { data } = await axios.post("http://localhost:8080/api/products",product)
+    const { data } = await axios.post("https://localhost:7200/api/Products/addwithdto", product)
     return data
 }

@@ -6,20 +6,23 @@ import { useBasket } from '../../contexts/BasketContext'
 
 function Card({ item }) {
     const { addToBasket, items } = useBasket()
-    const findBasketItem = items.find((basket_item) => basket_item.id === item.id)
-
+    const findBasketItem = items.find((basket_item) => basket_item.productId === item.productId)
+    
     return (
         <div className="col-lg-3 col-md-4 col-sm-6 mt-3">
             <figure className="card shadow">
-                <Link to={`/product/${item.id}`} className='img-wrap'>
-                    <img src={item.photo[0]} alt="product" loading='lazy' />
+                <Link to={`/product/${item.productId}`} className='img-wrap'>
+                    {
+                        item.imageUrls.length == 0 ? <img src='https://fomantic-ui.com/images/wireframe/image.png'/>: <img src={item.imageUrls[0].imageUrl} alt="product" loading='lazy' />
+                    }
+                    
                 </Link>
                 <figcaption className="info-wrap border-top">
-                    <Link to={`/product/${item.id}`} className='title text-truncate h5'>
-                        {item.title}
+                    <Link to={`/product/${item.productId}`} className='title text-truncate h5'>
+                        {item.productName}
                     </Link>
                     <div className="price-wrap">
-                        <span className="price">{item.price} TL</span>
+                        <span className="price">{item.unitPrice} TL</span>
                     </div>
                     <ul className="product-links">
                         <li>

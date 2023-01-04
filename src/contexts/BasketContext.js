@@ -15,14 +15,14 @@ const BasketProvider = ({ children }) => {
     const addToBasket = (data, findBasketItem) => {
         if (!findBasketItem) {
             message.success({content: "Sepete Eklendi",key:"basket:item",duration: 2})
-            return setItems((items) => [{ ...data, count: 1 }, ...items].sort((a, b) => a.id > b.id ? 1 : -1))
+            return setItems((items) => [{ ...data, count: 1 }, ...items].sort((a, b) => a.productId > b.productId ? 1 : -1))
         }
         message.success({content: "Sepetten Kaldırıldı",key:"basket:item",duration: 2})
-        removeFromBasket(findBasketItem.id)
+        removeFromBasket(findBasketItem.productId)
     }
 
     const removeFromBasket = (id) => {
-        const filtered = items.filter((item) => item.id !== id)
+        const filtered = items.filter((item) => item.productId !== id)
         setItems(filtered)
         message.success({content: "Sepetten Kaldırıldı",key:"basket:item",duration: 2})
     }
@@ -36,8 +36,8 @@ const BasketProvider = ({ children }) => {
             {
                 ...data, count: data.count + 1
             },
-            ...items.filter((item) => item.id != data.id)
-        ].sort((a, b) => a.id > b.id ? 1 : -1)
+            ...items.filter((item) => item.productId != data.productId)
+        ].sort((a, b) => a.productId > b.productId ? 1 : -1)
         )
     }
 
@@ -47,11 +47,11 @@ const BasketProvider = ({ children }) => {
                 {
                     ...data, count: data.count - 1
                 },
-                ...items.filter((item) => item.id != data.id),
-            ].sort((a, b) => a.id > b.id ? 1 : -1))
+                ...items.filter((item) => item.productId != data.productId),
+            ].sort((a, b) => a.productId > b.productId ? 1 : -1))
         }
         else {
-            removeFromBasket(data.id)
+            removeFromBasket(data.productId)
         }
     }
 

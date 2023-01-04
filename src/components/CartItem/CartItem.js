@@ -9,17 +9,19 @@ function CartItem({ item }) {
 
     return (
         <Figure className='d-flex card shadow flex-row '>
-            <Link to={`/product/${item.id}`} className='cart-img-wrap border border-top-0 border-start-0'>
-                <Figure.Image src={item.photo[0]} alt='cart-product' loading='lazy' />
+            <Link to={`/product/${item.productId}`} className='cart-img-wrap border border-top-0 border-start-0'>
+                {
+                    item.imageUrls.length == 0 ? <Figure.Image src='https://fomantic-ui.com/images/wireframe/image.png' alt='cart-product' loading='lazy' /> : <Figure.Image src={item.imageUrls[0].imageUrl} alt='cart-product' loading='lazy' />
+                }
             </Link>
             <Figure.Caption className='m-2 w-100'>
-                <div className="">
+                <div>
                     <div>
-                        <Link to={`/product/${item.id}`} className='title h5'>
-                            {item.title}
+                        <Link to={`/product/${item.productId}`} className='title h5'>
+                            {item.productName}
                         </Link>
                         <div className="price-wrap">
-                            <span className="price">{item.price} TL</span>
+                            <span className="price">{item.unitPrice} TL</span>
                         </div>
                     </div>
                     <div className='d-flex w-100'>
@@ -31,7 +33,7 @@ function CartItem({ item }) {
                             <button className='btn btn-primary responsive-button' onClick={() => handleIncrease(item)}>+</button>
                         </div>
                         <div className="text-end d-block mt-3 w-100">
-                            <button className='btn btn-primary responsive-button' onClick={() => removeFromBasket(item.id)}>Sepetten Kaldır</button>
+                            <button className='btn btn-primary responsive-button' onClick={() => removeFromBasket(item.productId)}>Sepetten Kaldır</button>
                         </div>
                     </div>
 

@@ -2,21 +2,21 @@ import React from 'react'
 import { useInfiniteQuery } from 'react-query'
 import { Link, useParams } from 'react-router-dom'
 import Card from '../../components/Card/Card'
-import { fetchProductList } from '../../services/Api'
+import { fetchProductsFiltered } from '../../services/Api'
 
-function Products() {
+function SearchPage() {
     const filter = useParams()
     const { data,
         error,
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
-        status } = useInfiniteQuery('products', fetchProductList, {
+        status } = useInfiniteQuery(['products', filter], fetchProductsFiltered, {
             getNextPageParam: (lastPage, pages) => {
                 const morePagesExist = lastPage?.length === 20;
                 if (!morePagesExist) return
                 return pages.length + 1
-            }
+            },
         })
     if (status === "loading") return 'Yükleniyor...'
 
@@ -60,4 +60,4 @@ function Products() {
     )
 }
 
-export default Products
+export default SearchPage

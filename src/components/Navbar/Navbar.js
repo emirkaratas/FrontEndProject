@@ -22,7 +22,6 @@ function Navbar() {
         e.preventDefault()
         setSearch("")
     }
-
     return (
         <div className='bg-light'>
             <div className='top-bar'>
@@ -54,7 +53,7 @@ function Navbar() {
                                     loggedIn &&
                                     <>
                                         {
-                                            user.role === "admin" && (
+                                            user.roles.includes("Admin") && (
                                                 <Link to="/admin">
                                                     <button className="btn btn-primary me-2" >
                                                         <RiAdminFill className='navbar-icon' />

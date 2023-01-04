@@ -17,7 +17,7 @@ function Basket() {
   const handleShow = () => setShow(true);
 
   const { items, emptyBasket } = useBasket()
-  const total = items.reduce((acc, obj) => acc + (obj.price * obj.count), 0)
+  const total = items.reduce((acc, obj) => acc + (obj.unitPrice * obj.count), 0)
 
   const formik = useFormik({
     initialValues: {
@@ -28,15 +28,16 @@ function Basket() {
     },
     validationSchema: validations,
     onSubmit: async (values, bag) => {
-      const itemIds = items.map((item) => { return { id: item.id, count: item.count } })
+      const itemIds = items.map((item) => { return { id: item.productId, count: item.count } })
       values.telNo = values.telNo.toString()
-      const input = { items: itemIds, orderDetails: values }
-      try {
-        await postOrder(input)
-        emptyBasket()
-      } catch (error) {
-        bag.setErrors({ general: error.response.data.message })
-      }
+      const input = { items: itemIds, ...values, orderDate: new Date() }
+      console.log(input)
+      // try {
+      //   await postOrder(input)
+      //   emptyBasket()
+      // } catch (error) {
+      //   bag.setErrors({ general: error.response.data.message })
+      // }
     }
   })
 
@@ -52,7 +53,7 @@ function Basket() {
             <div className="col-lg-9">
               <ul className='border card shadow p-3 mt-3 pb-0'>
                 {items.map((item) => {
-                  return <li key={item.id}>
+                  return <li key={item.productId}>
                     <CartItem item={item} />
                   </li>
                 })}

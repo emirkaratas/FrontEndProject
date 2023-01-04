@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import { AiFillMail, AiFillLock } from 'react-icons/ai'
-import { FaKey } from 'react-icons/fa'
+import { FaKey,FaUserCircle,FaUserEdit } from 'react-icons/fa'
 import validations from './validations'
 import Form from 'react-bootstrap/Form';
 import { fetchRegister } from '../../../services/Api'
@@ -14,6 +14,8 @@ function Signup() {
   const { login } = useAuth()
   const formik = useFormik({
     initialValues: {
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
       passwordConfirm: ""
@@ -21,7 +23,7 @@ function Signup() {
     validationSchema: validations,
     onSubmit: async (values, bag) => {
       try {
-        const registerResponse = await fetchRegister({ email: values.email, password: values.password })
+        const registerResponse = await fetchRegister({ email: values.email, password: values.password, confirmPassword: values.passwordConfirm, firstName: values.firstName, lastName: values.lastName, userName: "emir" })
         login(registerResponse)
         navigate(`/profile`)
       } catch (error) {
@@ -45,6 +47,42 @@ function Signup() {
                 )
               }
               <form className="mx-1 mx-md-4" onSubmit={formik.handleSubmit}>
+                <div className="row">
+                  <div className="col-lg-6 d-flex flex-row align-items-center mb-4">
+                    <FaUserCircle className='icon mt-auto me-2' />
+                    <div className="form-outline flex-fill mb-0">
+                      <label htmlFor="firstName">İsim</label>
+                      <Form.Control
+                        id="firstName"
+                        name="firstName"
+                        type="text"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        isInvalid={formik.touched.firstName && formik.errors.firstName}
+                        isValid={formik.touched.firstName && !formik.errors.firstName}
+                        className="form-control"
+                      />
+                      {formik.errors.firstName && formik.touched.firstName && <div>{formik.errors.firstName}</div>}
+                    </div>
+                  </div>
+                  <div className="col-lg-6 d-flex flex-row align-items-center mb-4">
+                    <FaUserEdit className='icon mt-auto me-2' />
+                    <div className="form-outline flex-fill mb-0">
+                      <label htmlFor="lastName">Soyad</label>
+                      <Form.Control
+                        id="lastName"
+                        name="lastName"
+                        type="lastName"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        isInvalid={formik.touched.lastName && formik.errors.lastName}
+                        isValid={formik.touched.lastName && !formik.errors.lastName}
+                        className="form-control"
+                      />
+                      {formik.errors.lastName && formik.touched.lastName && <div>{formik.errors.lastName}</div>}
+                    </div>
+                  </div>
+                </div>
                 <div className="d-flex flex-row align-items-center mb-4">
                   <AiFillMail className='icon mt-auto me-2' />
                   <div className="form-outline flex-fill mb-0">
@@ -56,6 +94,7 @@ function Signup() {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       isInvalid={formik.touched.email && formik.errors.email}
+                      isValid={formik.touched.email && !formik.errors.email}
                       className="form-control"
                     />
                     {formik.errors.email && formik.touched.email && <div>{formik.errors.email}</div>}
@@ -72,6 +111,7 @@ function Signup() {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       isInvalid={formik.touched.password && formik.errors.password}
+                      isValid={formik.touched.password && !formik.errors.password}
                       className="form-control"
                     />
                     {formik.errors.password && formik.touched.password && <div>{formik.errors.password}</div>}
@@ -88,6 +128,7 @@ function Signup() {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       isInvalid={formik.touched.passwordConfirm && formik.errors.passwordConfirm}
+                      isValid={formik.touched.passwordConfirm && !formik.errors.passwordConfirm}
                       className="form-control"
                     />
                     {formik.errors.passwordConfirm && formik.touched.passwordConfirm && <div>{formik.errors.passwordConfirm}</div>}

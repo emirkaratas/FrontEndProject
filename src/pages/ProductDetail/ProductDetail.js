@@ -17,9 +17,8 @@ function ProductDetail() {
 
     if (error) return 'An error has occurred: ' + error.message
 
-    const images = data.photo.map((url) => ({ original: url }))
-
-    const findBasketItem = items.find((item) => item.id === parseInt(product_id))
+    const images = data.imageUrls.length==0 ? [{ original: "https://fomantic-ui.com/images/wireframe/image.png" }] : data.imageUrls.map((url) => ({ original: url.imageUrl }))  
+    const findBasketItem = items.find((item) => item.productId === parseInt(product_id))
 
     return (
         <div className='container mt-3'>
@@ -37,7 +36,7 @@ function ProductDetail() {
                     </div>
                 </aside>
                 <main className="col-lg-7 details d-flex flex-column align-items-space-between ">
-                    <h1>{data.title}</h1>
+                    <h1>{data.productName}</h1>
                     <div className="row justify-content-center align-items-center">
                         <div className="col-md-8">
                             <div className="divider"></div>
@@ -49,7 +48,7 @@ function ProductDetail() {
                                 <div className="d-flex flex-column">
                                     <span className="price h4">
                                         <small>₺</small>
-                                        <strong>{data.price}</strong>
+                                        <strong>{data.unitPrice}</strong>
                                     </span>
                                     <small className="text-success">KDV dahil</small>
                                 </div>

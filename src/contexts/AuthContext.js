@@ -12,8 +12,8 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         (async () => {
             try {
-                const me = await fetchMe()
-                setLoggedIn(true)
+                const me = await fetchMe()              
+                setLoggedIn(true)               
                 setUser(me)
                 setLoading(false)
             } catch (error) {
@@ -25,15 +25,15 @@ const AuthProvider = ({ children }) => {
 
     const login = (data) => {
         setLoggedIn(true)
-        setUser(data.auth)
-        localStorage.setItem('access-token', data.accessToken)
-        localStorage.setItem('refresh-token', data.refreshToken)
+        setUser(data)
+        localStorage.setItem('access-token', data.token.tokenBody)
+        localStorage.setItem('refresh-token', data.token.refreshToken)
     }
 
     const logout = async()=>{
         setLoggedIn(false)
         setUser(null)
-        await fetchLogout()
+        // await fetchLogout()
         localStorage.removeItem('access-token')
         localStorage.removeItem('refresh-token')
     }
