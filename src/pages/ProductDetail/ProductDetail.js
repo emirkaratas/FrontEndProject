@@ -16,8 +16,8 @@ function ProductDetail() {
     if (isLoading) return 'Yükleniyor...'
 
     if (error) return 'An error has occurred: ' + error.message
-
-    const images = data.imageUrls.length==0 ? [{ original: "https://fomantic-ui.com/images/wireframe/image.png" }] : data.imageUrls.map((url) => ({ original: url.imageUrl }))  
+    console.log(data)
+    const images = data.imageUrls.length == 0 ? [{ original: "https://fomantic-ui.com/images/wireframe/image.png" }] : data.imageUrls.map((url) => ({ original: url.imageUrl }))
     const findBasketItem = items.find((item) => item.productId === parseInt(product_id))
 
     return (
@@ -42,7 +42,10 @@ function ProductDetail() {
                             <div className="divider"></div>
                             <div className="stock-web mb-3 h5">
                                 <span className="stock-status">Durumu: </span>
-                                <span className="in-stock text-success">Stokta Var</span>
+                                {
+                                    data.unitsInStock != 0 ? <span className="in-stock text-success">Stokta Var</span> : <span className="in-stock text-danger">Stokta Yok</span>
+                                }
+
                             </div>
                             <div className="price-wrap">
                                 <div className="d-flex flex-column">
@@ -55,18 +58,21 @@ function ProductDetail() {
                             </div>
                         </div>
                         <div className="col-md-4 text-end">
-                            <button className='btn btn-lg btn-info text-white btn-s1' onClick={() => addToBasket(data, findBasketItem)}>
-                                <div className="d-inline-block">
-                                    <div className="d-flex">
-                                        <div className="spin me-2"><FaShoppingCart /></div>
-                                        <span>
-                                            {
-                                                findBasketItem ? 'Sepetten Çıkart' : 'Sepete Ekle'
-                                            }
-                                        </span>
+                            {
+                                data.unitsInStock != 0 ? <button className='btn btn-lg btn-info text-white btn-s1' onClick={() => addToBasket(data, findBasketItem)}>
+                                    <div className="d-inline-block">
+                                        <div className="d-flex">
+                                            <div className="spin me-2"><FaShoppingCart /></div>
+                                            <span>
+                                                {
+                                                    findBasketItem ? 'Sepetten Çıkart' : 'Sepete Ekle'
+                                                }
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                            </button>
+                                </button> : <span/>
+                            }
+
                         </div>
                     </div>
                     <hr />

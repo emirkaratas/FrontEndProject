@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik'
-import { AiFillMail, AiFillLock } from 'react-icons/ai'
-import { FaKey,FaUserCircle,FaUserEdit } from 'react-icons/fa'
+import { AiFillMail, AiFillLock,AiOutlineUserAdd } from 'react-icons/ai'
+import { FaKey, FaUserCircle, FaUserEdit } from 'react-icons/fa'
 import validations from './validations'
 import Form from 'react-bootstrap/Form';
 import { fetchRegister } from '../../../services/Api'
@@ -16,6 +16,7 @@ function Signup() {
     initialValues: {
       firstName: "",
       lastName: "",
+      userName: "",
       email: "",
       password: "",
       passwordConfirm: ""
@@ -23,7 +24,7 @@ function Signup() {
     validationSchema: validations,
     onSubmit: async (values, bag) => {
       try {
-        const registerResponse = await fetchRegister({ email: values.email, password: values.password, confirmPassword: values.passwordConfirm, firstName: values.firstName, lastName: values.lastName, userName: "emir" })
+        const registerResponse = await fetchRegister({ email: values.email, password: values.password, confirmPassword: values.passwordConfirm, firstName: values.firstName, lastName: values.lastName, userName: values.userName })
         login(registerResponse)
         navigate(`/profile`)
       } catch (error) {
@@ -47,6 +48,23 @@ function Signup() {
                 )
               }
               <form className="mx-1 mx-md-4" onSubmit={formik.handleSubmit}>
+                <div className='d-flex flex-row align-items-center mb-4'>
+                <AiOutlineUserAdd className='icon mt-auto me-2' />
+                <div className="form-outline flex-fill mb-0">
+                  <label htmlFor="userName">Kullanıcı Adı</label>
+                  <Form.Control
+                    id="userName"
+                    name="userName"
+                    type="text"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={formik.touched.userName && formik.errors.userName}
+                    isValid={formik.touched.userName && !formik.errors.userName}
+                    className="form-control"
+                  />
+                  {formik.errors.userName && formik.touched.userName && <div>{formik.errors.userName}</div>}
+                </div>
+                </div>              
                 <div className="row">
                   <div className="col-lg-6 d-flex flex-row align-items-center mb-4">
                     <FaUserCircle className='icon mt-auto me-2' />

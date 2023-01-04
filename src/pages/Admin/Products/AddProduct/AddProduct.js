@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { postProduct } from '../../../../services/Api'
 import { Button } from 'react-bootstrap';
 
-function AdminProductDetail() {
+function AddProduct() {
     const queryClient = useQueryClient()
     const addMutation = useMutation(postProduct, {
         onSuccess: () => {
@@ -16,7 +16,6 @@ function AdminProductDetail() {
         }
     })
     const handleSubmit = async (values) => {
-        console.log(values)
         message.loading({ content: "Yükleniyor", key: "product:add" })
         values.imageUrls = values.imageUrls.map((item)=>({imageUrl: item}))
         addMutation.mutate({...values,categoryName: "string"}, {
@@ -148,4 +147,4 @@ function AdminProductDetail() {
     )
 }
 
-export default AdminProductDetail
+export default AddProduct

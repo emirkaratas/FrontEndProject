@@ -10,8 +10,11 @@ import { useFormik } from 'formik'
 import { TR } from 'country-flag-icons/react/1x1'
 import validations from './validations'
 import { postOrder } from '../../services/Api'
+import { message } from 'antd'
+import { useQueryClient } from 'react-query'
 
 function Basket() {
+  const queryClient = useQueryClient()
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -21,23 +24,24 @@ function Basket() {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      surname: "",
-      telNo: "",
-      address: "",
+      customerFirstName: "",
+      customerLastName: "",
+      customerPhone: "",
+      customerAddress: "",
     },
     validationSchema: validations,
     onSubmit: async (values, bag) => {
-      const itemIds = items.map((item) => { return { id: item.productId, count: item.count } })
-      values.telNo = values.telNo.toString()
-      const input = { items: itemIds, ...values }
-      console.log(input)
-      // try {
-      //   await postOrder(input)
-      //   emptyBasket()
-      // } catch (error) {
-      //   bag.setErrors({ general: error.response.data.message })
-      // }
+      const itemIds = items.map((item) => { return { productId: item.productId, quantity: item.count } })
+      values.customerPhone = values.customerPhone.toString()
+      const input = { orderDetails: itemIds, ...values }
+      try {
+        await postOrder(input)
+        emptyBasket()
+        message.success("Sipariş Verildi")
+        queryClient.refetchQueries("admin:orders")
+      } catch (error) {
+        bag.setErrors({ general: error.response.data.message })
+      }
     }
   })
 
@@ -82,30 +86,30 @@ function Basket() {
                           <Form.Group className="mb-3">
                             <Form.Label>İsim</Form.Label>
                             <Form.Control
-                              id='name'
-                              name='name'
+                              id='customerFirstName'
+                              name='customerFirstName'
                               type="text"
                               placeholder="İsminizi Giriniz"
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
-                              isInvalid={formik.touched.name && formik.errors.name}
+                              isInvalid={formik.touched.customerFirstName && formik.errors.customerFirstName}
                             />
-                            {formik.touched.name && formik.errors.name && <div className='text-danger'>{formik.errors.name}</div>}
+                            {formik.touched.customerFirstName && formik.errors.customerFirstName && <div className='text-danger'>{formik.errors.customerFirstName}</div>}
                           </Form.Group>
                         </div>
                         <div className="col-lg-6">
                           <Form.Group className="mb-3">
                             <Form.Label>Soyisim</Form.Label>
                             <Form.Control
-                              id='surname'
-                              name='surname'
+                              id='customerLastName'
+                              name='customerLastName'
                               type="text"
                               placeholder="Soyisminizi Giriniz"
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
-                              isInvalid={formik.touched.surname && formik.errors.surname}
+                              isInvalid={formik.touched.customerLastName && formik.errors.customerLastName}
                             />
-                            {formik.touched.surname && formik.errors.surname && <div className='text-danger'>{formik.errors.surname}</div>}
+                            {formik.touched.customerLastName && formik.errors.customerLastName && <div className='text-danger'>{formik.errors.customerLastName}</div>}
                           </Form.Group>
                         </div>
                       </div>
@@ -117,28 +121,28 @@ function Basket() {
                             <span>+90</span>
                           </div>
                           <Form.Control
-                            id='telNo'
-                            name='telNo'
+                            id='customerPhone'
+                            name='customerPhone'
                             type="number"
                             placeholder="Telefon Numarası"
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isInvalid={formik.touched.telNo && formik.errors.telNo}
+                            isInvalid={formik.touched.customerPhone && formik.errors.customerPhone}
                           />
                         </div>
-                        {formik.touched.telNo && formik.errors.telNo && <div className='text-danger'>{formik.errors.surname}</div>}
+                        {formik.touched.customerPhone && formik.errors.customerPhone && <div className='text-danger'>{formik.errors.customerPhone}</div>}
                       </Form.Group>
                       <Form.Group className="mb-3">
                         <Form.Label>Adres</Form.Label>
                         <Form.Control
-                          id='address'
-                          name='address'
+                          id='customerAddress'
+                          name='customerAddress'
                           as="textarea"
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
-                          isInvalid={formik.touched.address && formik.errors.address}
+                          isInvalid={formik.touched.customerAddress && formik.errors.customerAddress}
                         />
-                        {formik.touched.address && formik.errors.address && <div className='text-danger'>{formik.errors.address}</div>}
+                        {formik.touched.customerAddress && formik.errors.customerAddress && <div className='text-danger'>{formik.errors.customerAddress}</div>}
                       </Form.Group>
                       <button type="submit" className="btn btn-primary w-100">Sipariş Ver</button>
                     </Form>

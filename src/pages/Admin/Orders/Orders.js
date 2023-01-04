@@ -10,9 +10,6 @@ function Orders() {
   if (isLoading) return 'Yükleniyor...'
 
   if (error) return 'Hata Yakalandı: ' + error.message
-
-  let count
-
   return (
     <div className='container'>
       <h2 className='text-center mt-2 mb-2'>Siparişler</h2>
@@ -22,27 +19,21 @@ function Orders() {
             <th>Kullanıcı</th>
             <th>İsim</th>
             <th>Soyisim</th>
-            <th>Adres</th>
-            <th>Ürün Sayısı</th>
+            <th>Telefon Numarası</th>
+            <th>Sipariş Tarihi</th>
           </tr>
         </thead>
         <tbody>
           {
             data.map((item) => {
-              let count = 0
-              item.items.forEach(element => {
-                count += element.count
-              });
-              return <tr key={item.id}>
-                <td>{item.user.mail}</td>
-                <td>{item.orderDetails.name}</td>
-                <td>{item.orderDetails.surname}</td>
-                <td>{item.orderDetails.address}</td>
+              return <tr key={item.orderId}>
+                <td>{item.userMail}</td>
+                <td>{item.customerFirstName}</td>
+                <td>{item.customerLastName}</td>
+                <td>+90 {item.customerPhone}</td>
                 <td>
-                  <Link className='text-decoration-none' to={`/admin/order/${item.id}`}>
-                    <div className='btn btn-primary btn-sm'>
-                      {count}
-                    </div>
+                  <Link className='text-decoration-none' to={`/admin/order/${item.orderId}`}>
+                    {item.orderDate.slice(0,10)}
                     <span className='ms-2'>Detaya Git</span>    
                   </Link>      
                 </td>

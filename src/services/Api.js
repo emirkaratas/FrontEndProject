@@ -61,24 +61,18 @@ export const fetchMe = async () => {
 // }
 
 export const postOrder = async (input) => {
-    const { data } = await axios.post(`http://localhost:8080/api/products/order`, input)
+    const { data } = await axios.post(`https://localhost:7200/api/Orders/createorder`, input)
     return data
 }
 
-//Backend Connection in Development
-
 export const fetchOrders = async () => {
-    // const { data } = await axios.get(`http://localhost:8080/api/products/order`)
-    // return data
-    return [
-        { user: { mail: "emirkaratassss@gmail.com" }, id: 1, items: [{ id: 2, count: 1 }, { id: 3, count: 4 }], orderDetails: { name: "Emir", surname: "Karataş", telNo: "5530957203", address: "Samsun" } },
-        { user: { mail: "bilgeylmaz@gmail.com" }, id: 2, items: [{ id: 3, count: 1 }, { id: 1, count: 2 }], orderDetails: { name: "Bilge", surname: "Yılmaz", telNo: "5530000000", address: "İstanbul" } }
-    ]
+    const { data } = await axios.get("https://localhost:7200/api/Orders/getorders")
+    return data.data
 }
 
 export const fetchOrder = async (id) => {
-    if (id == 1) return { user: { mail: "emirkaratassss@gmail.com" }, id: 1, items: [{ id: 2, count: 1 }, { id: 3, count: 4 }], orderDetails: { name: "Emir", surname: "Karataş", telNo: "5530957203", address: "Samsun" } }
-    return { user: { mail: "bilgeylmaz@gmail.com" }, id: 2, items: [{ id: 3, count: 1 }, { id: 1, count: 2 }], orderDetails: { name: "Bilge", surname: "Yılmaz", telNo: "5530000000", address: "İstanbul" } }
+    const { data } = await axios.get(`https://localhost:7200/api/Orders/getwithdetails/${id}`)
+    return data.data
 }
 
 export const deleteProduct = async (id) => {

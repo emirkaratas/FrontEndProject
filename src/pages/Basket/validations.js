@@ -1,16 +1,16 @@
 import * as yup from 'yup'
 
 const validations = yup.object().shape({
-    name: yup
+    customerFirstName: yup
         .string()
         .required("Zorunlu Bir Alan"),
-    surname: yup
+    customerLastName: yup
         .string()
         .required("Zorunlu Bir Alan"),
-    telNo: yup
-        .string()   
+    customerPhone: yup
+        .string()
         .required("Zorunlu Bir Alan"),
-    address: yup
+    customerAddress: yup
         .string()
         .required("Zorunlu Bir Alan"),
 })
