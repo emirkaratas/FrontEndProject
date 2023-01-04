@@ -38,6 +38,11 @@ export const fetchAdminProducts = async () => {
     return data.data
 }
 
+export const fetchTakeProducts = async (num) => {
+    const { data } = await axios.get(`https://localhost:7200/api/Products/getlastproducts?number=${num}`)
+    return data.data
+}
+
 export const fetchRegister = async (input) => {
     const { data } = await axios.post(`https://localhost:7200/api/Auth/registerUser`, input)
     return data.data

@@ -17,6 +17,7 @@ function AdminProductDetail() {
             queryClient.refetchQueries("products")
             queryClient.refetchQueries(["admin:product", product_id])
             queryClient.refetchQueries(["product",product_id])
+            queryClient.refetchQueries("products-home")
         }
     })
 

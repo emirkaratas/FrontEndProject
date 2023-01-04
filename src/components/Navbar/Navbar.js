@@ -105,7 +105,7 @@ function Navbar() {
                     <div className="collapse navbar-collapse" id="navbar_main">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <Link to="/" className='nav-link ps-0'>Tüm Ürünler</Link>
+                                <Link to="/products" className='nav-link ps-0'>Tüm Ürünler</Link>
                             </li>
                         </ul>
                     </div>

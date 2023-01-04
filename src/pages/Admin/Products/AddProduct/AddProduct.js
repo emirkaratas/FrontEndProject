@@ -13,6 +13,7 @@ function AddProduct() {
         onSuccess: () => {
             queryClient.refetchQueries(["products", {}])
             queryClient.refetchQueries("admin:products")
+            queryClient.refetchQueries("products-home")
         }
     })
     const handleSubmit = async (values) => {

@@ -13,7 +13,8 @@ function Products() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("admin:products")  
-        queryClient.refetchQueries("products")  
+        queryClient.refetchQueries("products")
+        queryClient.refetchQueries("products-home")
       }   
     }
   )

@@ -16,6 +16,7 @@ import ProtectedRoute from './pages/ProtectedRoute/ProtectedRoute';
 import OrderDetail from './pages/Admin/Orders/OrderDetail/OrderDetail';
 import AdminProductDetail from './pages/Admin/Products/ProductDetail/AdminProductDetail';
 import AddProduct from './pages/Admin/Products/AddProduct/AddProduct';
+import HomePage from './pages/HomePage/HomePage';
 
 
 function App() {
@@ -23,7 +24,8 @@ function App() {
     <div className="App min-vh-100 d-flex flex-column">
       <Navbar />
       <Routes>
-        <Route exact path="/" element={<Products />} />
+        <Route exact path="/" element={<HomePage />}/>
+        <Route path='/products' element={<Products />}/>
         <Route path='/product/:product_id' element={<ProductDetail />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />

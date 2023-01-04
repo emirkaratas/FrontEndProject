@@ -16,7 +16,7 @@ function ProductDetail() {
     if (isLoading) return 'Yükleniyor...'
 
     if (error) return 'An error has occurred: ' + error.message
-    console.log(data)
+
     const images = data.imageUrls.length == 0 ? [{ original: "https://fomantic-ui.com/images/wireframe/image.png" }] : data.imageUrls.map((url) => ({ original: url.imageUrl }))
     const findBasketItem = items.find((item) => item.productId === parseInt(product_id))
 
