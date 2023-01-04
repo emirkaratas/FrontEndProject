@@ -30,7 +30,7 @@ function Basket() {
     onSubmit: async (values, bag) => {
       const itemIds = items.map((item) => { return { id: item.productId, count: item.count } })
       values.telNo = values.telNo.toString()
-      const input = { items: itemIds, ...values, orderDate: new Date() }
+      const input = { items: itemIds, ...values }
       console.log(input)
       // try {
       //   await postOrder(input)

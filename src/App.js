@@ -16,7 +16,6 @@ import ProtectedRoute from './pages/ProtectedRoute/ProtectedRoute';
 import OrderDetail from './pages/Admin/Orders/OrderDetail/OrderDetail';
 import AdminProductDetail from './pages/Admin/Products/ProductDetail/AdminProductDetail';
 import AddProduct from './pages/Admin/Products/AddProduct/AddProduct';
-import SearchPage from './pages/SearchPage/SearchPage';
 
 function App() {
   return (
@@ -43,7 +42,7 @@ function App() {
             <Route path='products/new' element={<AddProduct/>}/>
           </Route>
         </Route>
-        <Route path='/search/:filter' element={<SearchPage/>}/>
+        <Route path='/search/:filter' element={<Products/>}/>
         <Route path='*' element={<Error404 />} />
       </Routes>
       <Footer />

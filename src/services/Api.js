@@ -16,14 +16,16 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 
-export const fetchProductList = async ({ pageParam = 1}) => {
-    const { data } = await axios.get(`https://localhost:7200/api/Products/page?page=${pageParam}`)
-    return data
-}
+export const fetchProductList = async ({ pageParam = 1, queryKey }) => {
+    if (JSON.stringify(queryKey[1]) === '{}') {
+        const { data } = await axios.get(`https://localhost:7200/api/Products/page?page=${pageParam}`)
+        return data
+    }
+    else {
+        const { data } = await axios.post(`https://localhost:7200/api/Products/filter/${pageParam}?name=${queryKey[1].filter}`)
+        return data
+    }
 
-export const fetchProductsFiltered = async({ pageParam = 1, queryKey }) => {
-    const { data } = await axios.post(`https://localhost:7200/api/Products/filter/${pageParam}?name=${queryKey[1].filter}`)
-    return data
 }
 
 export const fetchProduct = async (id) => {

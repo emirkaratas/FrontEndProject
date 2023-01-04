@@ -11,7 +11,7 @@ function Products() {
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
-        status } = useInfiniteQuery('products', fetchProductList, {
+        status } = useInfiniteQuery(['products',filter], fetchProductList, {
             getNextPageParam: (lastPage, pages) => {
                 const morePagesExist = lastPage?.length === 20;
                 if (!morePagesExist) return
