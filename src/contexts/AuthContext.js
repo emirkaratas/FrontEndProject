@@ -24,16 +24,18 @@ const AuthProvider = ({ children }) => {
     }, [])
 
     const login = (data) => {
+        if (data.isSuccess == false) {
+            throw data.data.message
+        }
         setLoggedIn(true)
-        setUser(data)
-        localStorage.setItem('access-token', data.token.tokenBody)
-        localStorage.setItem('refresh-token', data.token.refreshToken)
+        setUser(data.data)
+        localStorage.setItem('access-token', data.data.token.tokenBody)
+        localStorage.setItem('refresh-token', data.data.token.refreshToken)
     }
 
     const logout = async()=>{
         setLoggedIn(false)
         setUser(null)
-        // await fetchLogout()
         localStorage.removeItem('access-token')
         localStorage.removeItem('refresh-token')
     }

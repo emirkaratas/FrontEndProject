@@ -28,7 +28,7 @@ function Signup() {
         login(registerResponse)
         navigate(`/profile`)
       } catch (error) {
-        bag.setErrors({ general: error.response.data.message })
+        bag.setErrors({ general: error })
       }
     }
   })

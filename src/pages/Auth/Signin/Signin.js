@@ -26,7 +26,7 @@ function Signin() {
         login(loginResponse)
         navigate(`/profile`)
       } catch (error) {
-        bag.setErrors({ general: error.response.data.message })
+        bag.setErrors({ general: error })
       }
     }
   })

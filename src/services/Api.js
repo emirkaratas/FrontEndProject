@@ -4,10 +4,6 @@ axios.interceptors.request.use(function (config) {
     const { origin } = new URL(config.url)
     const allowedOrigin = "http://localhost:7200/api"
     const token = localStorage.getItem('access-token')
-
-    // if (allowedOrigin.includes(origin)) {
-    //     config.headers.authorization = token      
-    // }
     config.headers.token = token
     config.headers.authorization = `Bearer ${token}`
 
@@ -45,25 +41,18 @@ export const fetchTakeProducts = async (num) => {
 
 export const fetchRegister = async (input) => {
     const { data } = await axios.post(`https://localhost:7200/api/Auth/registerUser`, input)
-    return data.data
+    return data
 }
 
 export const fetchLogin = async (input) => {
     const { data } = await axios.post(`https://localhost:7200/api/Auth/login`, input)
-    return data.data
+    return data
 }
 
 export const fetchMe = async () => {
     const { data } = await axios.get(`https://localhost:7200/api/Auth/authMe`)
     return data.data
 }
-
-// export const fetchLogout = async () => {
-//     const { data } = await axios.post(`https://localhost:7200/api/Auth/delete`, {
-//         refresh_token: localStorage.getItem('refresh-token')
-//     })
-//     return data
-// }
 
 export const postOrder = async (input) => {
     const { data } = await axios.post(`https://localhost:7200/api/Orders/createorder`, input)
