@@ -17,7 +17,7 @@ function ProductDetail() {
 
     if (error) return 'An error has occurred: ' + error.message
 
-    const images = data.imageUrls.length == 0 ? [{ original: "https://fomantic-ui.com/images/wireframe/image.png" }] : data.imageUrls.map((url) => ({ original: url.imageUrl }))
+    const images = data.data.imageUrls.length == 0 ? [{ original: "https://fomantic-ui.com/images/wireframe/image.png" }] : data.data.imageUrls.map((url) => ({ original: url.imageUrl }))
     const findBasketItem = items.find((item) => item.productId === parseInt(product_id))
 
     return (
@@ -36,14 +36,14 @@ function ProductDetail() {
                     </div>
                 </aside>
                 <main className="col-lg-7 details d-flex flex-column align-items-space-between ">
-                    <h1>{data.productName}</h1>
+                    <h1>{data.data.productName}</h1>
                     <div className="row justify-content-center align-items-center">
                         <div className="col-md-8">
                             <div className="divider"></div>
                             <div className="stock-web mb-3 h5">
                                 <span className="stock-status">Durumu: </span>
                                 {
-                                    data.unitsInStock != 0 ? <span className="in-stock text-success">Stokta Var</span> : <span className="in-stock text-danger">Stokta Yok</span>
+                                    data.data.unitsInStock != 0 ? <span className="in-stock text-success">Stokta Var</span> : <span className="in-stock text-danger">Stokta Yok</span>
                                 }
 
                             </div>
@@ -51,7 +51,7 @@ function ProductDetail() {
                                 <div className="d-flex flex-column">
                                     <span className="price h4">
                                         <small>₺</small>
-                                        <strong>{data.unitPrice}</strong>
+                                        <strong>{data.data.unitPrice}</strong>
                                     </span>
                                     <small className="text-success">KDV dahil</small>
                                 </div>
@@ -59,7 +59,7 @@ function ProductDetail() {
                         </div>
                         <div className="col-md-4 text-end">
                             {
-                                data.unitsInStock != 0 ? <button className='btn btn-lg btn-info text-white btn-s1' onClick={() => addToBasket(data, findBasketItem)}>
+                                data.data.unitsInStock != 0 ? <button className='btn btn-lg btn-info text-white btn-s1' onClick={() => addToBasket(data.data, findBasketItem)}>
                                     <div className="d-inline-block">
                                         <div className="d-flex">
                                             <div className="spin me-2"><FaShoppingCart /></div>
@@ -79,7 +79,7 @@ function ProductDetail() {
                     <div className="well d-flex flex-column mt-2">
                         <span className='h5'>Özellikler</span>
                         <div className="text-truncate">
-                            {data.description}
+                            {data.data.description}
                         </div>
                         <a href="#specs" className='mt-2'>Daha Fazlasını Göster</a>
                     </div>
@@ -95,7 +95,7 @@ function ProductDetail() {
                 <div className="col-lg-12 mt-5" id='specs'>
                     <div className="bg-light">
                         <p className='line'>
-                            {data.description}
+                            {data.data.description}
                         </p>
                     </div>
                 </div>

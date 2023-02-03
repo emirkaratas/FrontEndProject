@@ -1,8 +1,6 @@
 import axios from "axios"
 
 axios.interceptors.request.use(function (config) {
-    const { origin } = new URL(config.url)
-    const allowedOrigin = "http://localhost:7200/api"
     const token = localStorage.getItem('access-token')
     config.headers.token = token
     config.headers.authorization = `Bearer ${token}`
@@ -26,7 +24,8 @@ export const fetchProductList = async ({ pageParam = 1, queryKey }) => {
 
 export const fetchProduct = async (id) => {
     const { data } = await axios.get(`https://localhost:7200/api/Products/getoneproductwithdetails/${id}`)
-    return data.data
+    console.log(data)
+    return data
 }
 
 export const fetchAdminProducts = async () => {
@@ -51,7 +50,7 @@ export const fetchLogin = async (input) => {
 
 export const fetchMe = async () => {
     const { data } = await axios.get(`https://localhost:7200/api/Auth/authMe`)
-    return data.data
+    return data
 }
 
 export const postOrder = async (input) => {

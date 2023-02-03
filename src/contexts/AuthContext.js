@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { fetchLogout, fetchMe } from "../services/Api";
+import { fetchMe } from "../services/Api";
 import Spinner from 'react-bootstrap/Spinner';
 
 const AuthContext = createContext()
@@ -12,9 +12,9 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         (async () => {
             try {
-                const me = await fetchMe()              
-                setLoggedIn(true)               
-                setUser(me)
+                const me = await fetchMe()     
+                setLoggedIn(me.isSuccess)               
+                setUser(me.data)
                 setLoading(false)
             } catch (error) {
                 setLoading(false)
